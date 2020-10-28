@@ -4,7 +4,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "vnet" {
     name     = "vnetgroup"
-    location = "Central India"
+    location = "East Us"
 }
 
 resource "azurerm_virtual_network" "vnet01" {
@@ -41,4 +41,3 @@ resource "azurerm_subnet" "subnet04" {
     resource_group_name = "${azurerm_resource_group.vnet.name}"
     address_prefix = "192.168.4.0/24"
 }
-
