@@ -4,7 +4,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "vnet" {
     name     = "vnetgroup"
-    location = "East Us"
+    location = "${var.location}"
 }
 
 resource "azurerm_virtual_network" "vnet01" {
@@ -123,21 +123,21 @@ resource "azurerm_public_ip" "staticip" {
 }
 
 resource "azurerm_sql_server" "primary" {
-    name = "sql-primary"
+    name = "${var.primarydatabase}"
     resource_group_name = "${azurerm_resource_group.vnet.name}"
     location = "${azurerm_resource_group.vnet.location}"
-    version = "12.0"
-    administrator_login = "sqladmin"
-    administrator_login_password = "pa$$w0rd"
+    version = "${var.primary_database_version}"
+    administrator_login = "${var.primary_database_admin}"
+    administrator_login_password = "${var.primary_password}"
 }
 
 resource "azurerm_sql_server" "secondary" {
-    name = "sql-secondary"
+    name = "${var.secondarydatabase}"
     resource_group_name = "${azurerm_resource_group.vnet.name}"
     location = "West Us"
-    version = "12.0"
-    administrator_login = "sqladmin"
-    administrator_login_password = "pa$$w0rd"
+    version = "${var.secondary_database_version}"
+    administrator_login = "${var.secondary_database_admin}"
+    administrator_login_password = "${var.secondary_password}"
 }
 
 resource "azurerm_sql_database" "db1" {
