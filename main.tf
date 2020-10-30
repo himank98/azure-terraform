@@ -122,5 +122,43 @@ resource "azurerm_public_ip" "example" {
   allocation_method   = "Static"
 }
 
+resource "azurerm_sql_server" "primary" {
+    name = "sql-primary"
+    resource_group_name = "${azurerm_resource_group.vnet.name}"
+    location = "${azurerm_resource_group.vnet.location}"
+    version = "12.0"
+    administrator_login = "sqladmin"
+    administrator_login_password = "pa$$w0rd"
+}
+
+resource "azurerm_sql_server" "secondary" {
+    name = "sql-secondary"
+    resource_group_name = "${azurerm_resource_group.vnet.name}"
+    location = "West Us"
+    version = "12.0"
+    administrator_login = "sqladmin"
+    administrator_login_password = "pa$$w0rd"
+}
+
+resource "azurerm_sql_database" "db1" {
+  name                = "db1"
+  resource_group_name = "${azurerm_resource_group.vnet.name}"
+  location            = "${azurerm_resource_group.vnet.location}"
+  server_name         = "${azurerm_sql_server.primary.name}"
+}
+resource "azurerm_sql_failover_group" "example" {
+  name                = "failover"
+  resource_group_name = "${azurerm_resource_group.vnet.name}"
+  server_name         = "${azurerm_sql_server.primary.name}"
+  databases           = [azurerm_sql_database.db1.id]
+  partner_servers {
+    id = azurerm_sql_server.secondary.id
+  }
+
+  read_write_endpoint_failover_policy {
+    mode          = "Automatic"
+    grace_minutes = 60
+  }
+}
 
 
