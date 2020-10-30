@@ -11,35 +11,35 @@ resource "azurerm_virtual_network" "vnet01" {
     name = "vnet01"
     resource_group_name = "${azurerm_resource_group.vnet.name}"
     location = "${azurerm_resource_group.vnet.location}"
-    address_space = ["192.168.0.0/16"]
+    address_space = ["${var.vnetcidr}"]
 }
 
 resource "azurerm_subnet" "web-subnet" {
     name = "web-subnet"
     virtual_network_name = "${azurerm_virtual_network.vnet01.name}"
     resource_group_name = "${azurerm_resource_group.vnet.name}"
-    address_prefix = "192.168.1.0/24"
+    address_prefix = "${var.websubnetcidr}"
 }
 
 resource "azurerm_subnet" "mgt-subnet" {
     name = "mgt-subnet"
     virtual_network_name = "${azurerm_virtual_network.vnet01.name}"
     resource_group_name = "${azurerm_resource_group.vnet.name}"
-    address_prefix = "192.168.2.0/24"
+    address_prefix = "${var.mgtsubnetcidr}"
 }
 
 resource "azurerm_subnet" "db-subnet" {
     name = "db-subnet"
     virtual_network_name = "${azurerm_virtual_network.vnet01.name}"
     resource_group_name = "${azurerm_resource_group.vnet.name}"
-    address_prefix = "192.168.3.0/24"
+    address_prefix = "${var.dbsubnetcidr}"
 }
 
 resource "azurerm_subnet" "ad-subnet" {
     name = "ad-subnet"
     virtual_network_name = "${azurerm_virtual_network.vnet01.name}"
     resource_group_name = "${azurerm_resource_group.vnet.name}"
-    address_prefix = "192.168.4.0/24"
+    address_prefix = "${var.adsubnetcidr}"
 }
 
 resource "azurerm_network_security_group" "web-nsg" {
@@ -146,7 +146,7 @@ resource "azurerm_sql_database" "db1" {
   location            = "${azurerm_resource_group.vnet.location}"
   server_name         = "${azurerm_sql_server.primary.name}"
 }
-resource "azurerm_sql_failover_group" "failover policy" {
+resource "azurerm_sql_failover_group" "failoverpolicy" {
   name                = "failover"
   resource_group_name = "${azurerm_resource_group.vnet.name}"
   server_name         = "${azurerm_sql_server.primary.name}"
