@@ -75,7 +75,7 @@ resource "azurerm_network_security_group" "db-nsg" {
         source_address_prefix = "*"
         source_port_range = "*"
         destination_address_prefix = "*"
-        destination_port_range = "22"
+        destination_port_range = "3306"
     }
 }
 
@@ -146,7 +146,7 @@ resource "azurerm_sql_database" "db1" {
   location            = "${azurerm_resource_group.vnet.location}"
   server_name         = "${azurerm_sql_server.primary.name}"
 }
-resource "azurerm_sql_failover_group" "example" {
+resource "azurerm_sql_failover_group" "failover policy" {
   name                = "failover"
   resource_group_name = "${azurerm_resource_group.vnet.name}"
   server_name         = "${azurerm_sql_server.primary.name}"
