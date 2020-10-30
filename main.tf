@@ -115,7 +115,7 @@ resource "azurerm_network_security_group" "ad-nsg" {
     }
 }
 
-resource "azurerm_public_ip" "example" {
+resource "azurerm_public_ip" "staticip" {
   name                = "bastionhostip"
   resource_group_name = "${azurerm_resource_group.vnet.name}"
   location            = "${azurerm_resource_group.vnet.location}"
