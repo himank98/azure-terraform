@@ -123,7 +123,7 @@ resource "azurerm_public_ip" "staticip" {
 }
 
 resource "azurerm_sql_server" "primary" {
-    name = "${var.primarydatabase}"
+    name = "${var.primary_database}"
     resource_group_name = "${azurerm_resource_group.vnet.name}"
     location = "${azurerm_resource_group.vnet.location}"
     version = "${var.primary_database_version}"
@@ -132,7 +132,7 @@ resource "azurerm_sql_server" "primary" {
 }
 
 resource "azurerm_sql_server" "secondary" {
-    name = "${var.secondarydatabase}"
+    name = "${var.secondary_database}"
     resource_group_name = "${azurerm_resource_group.vnet.name}"
     location = "West Us"
     version = "${var.secondary_database_version}"

@@ -26,12 +26,12 @@ variable "adsubnetcidr" {
     default = "192.168.4.0/24"
 }
 
-variable "primarydatabase" {
+variable "primary_database" {
     type = string
     default = "sql-primary"
 }
 
-variable "secondarydatabase" {
+variable "secondary_database" {
     type = string
     default = "sql-secondary"
 }
