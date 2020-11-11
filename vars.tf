@@ -28,12 +28,12 @@ variable "adsubnetcidr" {
 
 variable "primary_database" {
     type = string
-    default = "sql-primary"
+    default = "sql-primary-database"
 }
 
 variable "secondary_database" {
     type = string
-    default = "sql-secondary"
+    default = "sql-secondary-database"
 }
 
 variable "primary_database_admin" {
@@ -64,4 +64,19 @@ variable "primary_database_version" {
 variable "secondary_database_version" {
     type = string
     default = "12.0"
+}
+
+variable "host_name"{
+    type = string
+    default = "magentoserver"
+}
+
+variable "username" {
+    type = string
+    default = "magento"
+}
+
+variable "os_password" {
+    type = string
+    default = "Redhat@123"
 }
