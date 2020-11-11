@@ -118,6 +118,18 @@ resource "azurerm_network_security_group" "ad-nsg" {
         destination_port_range = "22"
     }
 }
+resource "azurerm_public_ip" "publicip" {
+  name                    = "dev-web"
+  location                = "${azurerm_resource_group.vnet.location}"
+  resource_group_name     = "${azurerm_resource_group.vnet.name}"
+  allocation_method       = "Static"
+  idle_timeout_in_minutes = 30
+
+  tags = {
+    environment = "dev"
+  }
+}
+
 
 resource "azurerm_network_interface" "net-interface" {
     name = "dev-network"
@@ -128,6 +140,7 @@ resource "azurerm_network_interface" "net-interface" {
         name = "dev-webserver"
         subnet_id = "${azurerm_subnet.web-subnet.id}"
         private_ip_address_allocation = "Dynamic"
+        public_ip_address_id = "${azurerm_public_ip.publicip.id}"
     }
 }
 
