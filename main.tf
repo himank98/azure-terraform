@@ -162,3 +162,4 @@ resource "azurerm_sql_failover_group" "failoverpolicy" {
 }
 
 
+
